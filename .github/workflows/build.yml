@@ -24,9 +24,10 @@ jobs:
           npm -v
 
       - name: install dependencies
-        run: npm install
-        run: pwd
-        run: ls -al
+        run: |
+          npm install
+          pwd
+          ls -al
   
   build:
     runs-on: ubuntu-latest
