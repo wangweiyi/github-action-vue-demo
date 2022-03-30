@@ -24,16 +24,8 @@ jobs:
           npm -v
 
       - name: install dependencies
-        run: |
-          npm install
-          pwd
-          ls -al
-  
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - run: pwd
-      - run: ls -al
-      - run: whoami
-      - run: npm run build
-      - run: echo 'END CI'
+        run: npm install
+      
+      - name: build project
+        run: npm run build
+      
