@@ -2,7 +2,7 @@ name: GitHub Actions CI
 on: 
   push:
     branches:
-      - master
+      - main
     paths:
       - 'src/**'
       - '.github/workflows/**'
