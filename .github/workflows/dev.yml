@@ -21,8 +21,6 @@ jobs:
       - name: set ssh key 
         run: | 
           mkdir -p ~/.ssh/
-          echo "${{secrets.MAGICBOOK_ID_RSA_PUB}}"
-          echo "${{secrets.MAGICBOOK_ID_RSA}}"
           echo "${{secrets.MAGICBOOK_ID_RSA}}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan "124.223.206.155" >> ~/.ssh/known_hosts 
@@ -30,8 +28,15 @@ jobs:
       - name: deploy 
         run: |
           ssh weiyi@124.223.206.155 "
-            mkdir ~/workspace
-            cd workspace
-            pwd
+            cd ~/workspace
+            git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
+            git checkout dev
+            git pull origin dev
+            # 启动docker 
+            docker-compose build vue-demo
+            docker-compose up -d
           "
+      
+      - name: delete ssh key
+        run: rm -rf ~/.ssh/id_rsa
 
