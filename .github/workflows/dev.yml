@@ -21,8 +21,9 @@ jobs:
       - name: set ssh key 
         run: | 
           mkdir -p ~/.ssh/
-          echo "${{secrets.TY_PRIVATE_ID_RSA}}"
-          echo "${{secrets.TY_PRIVATE_ID_RSA}}" > ~/.ssh/id_rsa
+          echo "${{secrets.MAGICBOOK_ID_RSA_PUB}}"
+          echo "${{secrets.MAGICBOOK_ID_RSA}}"
+          echo "${{secrets.MAGICBOOK_ID_RSA}}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan "124.223.206.155" >> ~/.ssh/known_hosts 
       
