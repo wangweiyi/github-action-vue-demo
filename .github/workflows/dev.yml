@@ -6,27 +6,30 @@ on:
     paths:
       - 'src/**'
       - '.github/workflows/**'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
 
 jobs:
-  install:
+  deploy-dev:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3 # 执行 git pull
-      
-      - name: install nodejs
-        uses: actions/setup-node@v1 # install node
-        with:
-          node-version: 14
-      
-      - name: print node version
-        run: |
-          node -v
-          npm -v
 
-      - name: install dependencies
-        run: npm install
-  
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - run: npm run build
+      # 将本机的私钥复制到执行github action的ubuntu服务器上, 以使action服务器可以免密与测试服务器进行ssh通信
+      # ssh-keyscan 是将测试机ip加入ssh信任, 防止再提示指纹确认
+      - name: set ssh key 
+        run: | 
+          mkdir -p ~/.ssh/
+          echo "${{secrets.TY_ID_RSA}}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan "124.223.206.155" >> ~/.ssh/known_hosts 
+      
+      - name: deploy 
+        run: |
+          ssh weiyi@124.223.206.155 "
+            mkdir ~/workspace
+            cd workspace
+            pwd
+          "
+
