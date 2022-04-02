@@ -1,0 +1,32 @@
+name: dev cicd
+on: 
+  push:
+    branches:
+      - dev
+    paths:
+      - 'src/**'
+      - '.github/workflows/**'
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 # 执行 git pull
+      
+      - name: install nodejs
+        uses: actions/setup-node@v1 # install node
+        with:
+          node-version: 14
+      
+      - name: print node version
+        run: |
+          node -v
+          npm -v
+
+      - name: install dependencies
+        run: npm install
+  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run build

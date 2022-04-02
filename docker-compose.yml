@@ -1,0 +1,13 @@
+version: '3'
+services:
+  vue-demo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vue-demo
+    container_name: vue-demo
+    ports:
+      - 3000:8080 
+    environment:
+      - AUTHOR_NAME=hello_world
+      
