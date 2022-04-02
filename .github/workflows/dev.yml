@@ -28,10 +28,24 @@ jobs:
       - name: deploy 
         run: |
           ssh weiyi@124.223.206.155 "
+            if [ ! -d "~/workspace" ];then
+              mkdir ~/workspace
+            else
+              echo "workspace文件夹已经存在"
+            fi
+
             cd ~/workspace
-            git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
+
+            if [ ! -d "~/workspace/github-action-vue-demo" ];then
+              git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
+            else
+              echo "github-action-vue-demo文件夹已经存在"
+            fi
+
+            cd ~/workspace/github-action-vue-demo
             git checkout dev
             git pull origin dev
+            
             # 启动docker 
             docker-compose build vue-demo
             docker-compose up -d
