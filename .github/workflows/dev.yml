@@ -44,7 +44,9 @@ jobs:
 
             cd ~/workspace/github-action-vue-demo
             git checkout dev
+            echo '------------------------------------------------------'
             git pull origin dev
+            echo "======================================================"
             
             # 启动docker 
             docker-compose build vue-demo
