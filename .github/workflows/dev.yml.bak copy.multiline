@@ -1,0 +1,67 @@
+name: dev cicd
+on: 
+  push:
+    branches:
+      - dev
+    paths:
+      - 'src/**'
+      - '.github/workflows/**'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3 # 执行 git pull
+
+      # 将本机的私钥复制到执行github action的ubuntu服务器上, 以使action服务器可以免密与测试服务器进行ssh通信
+      # ssh-keyscan 是将测试机ip加入ssh信任, 防止再提示指纹确认
+      - name: set ssh key 
+        run: | 
+          mkdir -p ~/.ssh/
+          echo "${{secrets.MAGICBOOK_ID_RSA}}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan "124.223.206.155" >> ~/.ssh/known_hosts 
+      
+      
+        # run: |
+        #   ssh weiyi@124.223.206.155 "
+        #     mkdir ~/workspace
+            
+        #     cd ~/workspace
+
+        #     git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
+
+        #     cd ~/workspace/github-action-vue-demo
+            
+        #     echo '------------------------------------------------------'
+        #     git pull origin dev
+        #     echo "======================================================"
+            
+        #     # 启动docker 
+        #     docker-compose build vue-demo
+        #     docker-compose up -d
+        #   "
+      - name: connet to server 
+        run: ssh weiyi@124.223.206.155 && cd && pwd
+
+      - run: pwd
+      - run: mkdir ~/workspace
+      - run: cd ~/workspace
+
+      - run: git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
+
+      - run: cd ~/workspace/github-action-vue-demo
+          
+      - run: git pull origin dev
+          
+      - run: docker-compose build vue-demo
+
+      - run: docker-compose up -d
+          
+      
+      - name: delete ssh key
+        run: rm -rf ~/.ssh/id_rsa
+

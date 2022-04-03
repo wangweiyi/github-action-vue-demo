@@ -26,25 +26,23 @@ jobs:
           ssh-keyscan "124.223.206.155" >> ~/.ssh/known_hosts 
       
       - name: connet to server 
-        run: |
-          ssh weiyi@124.223.206.155
-          pwd
+        run: ssh weiyi@124.223.206.155 && cd && pwd
 
-          mkdir ~/workspace
-          cd ~/workspace
-          pwd
+      - run: pwd
+      - run: mkdir ~/workspace
+      - run: cd ~/workspace
 
-          git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
-          pwd
+      - run: git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
 
-          cd ~/workspace/github-action-vue-demo
-          pwd
-
-          git pull origin dev
+      - run: cd ~/workspace/github-action-vue-demo
           
-          docker-compose build vue-demo
-          docker-compose up -d
+      - run: git pull origin dev
           
+      - run: docker-compose build vue-demo
+
+      - run: docker-compose up -d
+          
+      
       - name: delete ssh key
         run: rm -rf ~/.ssh/id_rsa
 
