@@ -41,9 +41,13 @@ jobs:
           pwd
 
           git pull origin dev
-          
-          docker-compose build vue-demo
-          docker-compose up -d
+          pwd
+      
+      - run: pwd
+      
+      - run: docker-compose build vue-demo
+
+      - run: docker-compose up -d
           
       - name: delete ssh key
         run: rm -rf ~/.ssh/id_rsa
