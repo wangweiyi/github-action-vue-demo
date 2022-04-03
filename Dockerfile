@@ -19,4 +19,4 @@ EXPOSE 8080
 
 # 容器启动时执行的命令, 
 # 只能有一条, 且必须是会阻塞控制台的命令, 否则执行完后容器就退出了
-CMD echo 'image made by ${AUTHOR_NAME}' && npm run serve
+CMD npm i pm2 && npm run serve && npx pm2 log
