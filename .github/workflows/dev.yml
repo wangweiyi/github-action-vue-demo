@@ -25,30 +25,14 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan "124.223.206.155" >> ~/.ssh/known_hosts 
       
-      - name: connet to server 
+      - name: connet to server and git pull and compose
         run: |
-          ssh weiyi@124.223.206.155
-          pwd
-
-          mkdir ~/workspace
-          cd ~/workspace
-          pwd
-
-          git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
-          pwd
-
-          cd ~/workspace/github-action-vue-demo
-          pwd
-
-          git pull origin dev
-          pwd
-      
-      - run: pwd
-      
-      - run: docker-compose build vue-demo
-
-      - run: docker-compose up -d
-          
+          ssh weiyi@124.223.206.155 "
+            pwd
+            git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
+            docker-compose build vue-demo
+            docker-compose up -d
+          "
       - name: delete ssh key
         run: rm -rf ~/.ssh/id_rsa
 
