@@ -15,7 +15,7 @@ EXPOSE 8080
 # 镜像的构建命令
 # 每一次RUN都会在镜像上新建一层, 可以使用 \ 换行, 用 && 符号连接多条命令，这样只会创建一层镜像
 # 设置时区
-RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && npm install
+# RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && npm install
 
 # 容器启动时执行的命令, 
 # 只能有一条, 且必须是会阻塞控制台的命令, 否则执行完后容器就退出了
