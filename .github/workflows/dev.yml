@@ -26,32 +26,40 @@ jobs:
           ssh-keyscan "124.223.206.155" >> ~/.ssh/known_hosts 
       
       - name: deploy 
-        run: |
-          ssh weiyi@124.223.206.155 "
-            if [ ! -d "~/workspace" ];then
-              mkdir ~/workspace
-            else
-              echo "workspace文件夹已经存在"
-            fi
-
-            cd ~/workspace
-
-            if [ ! -d "~/workspace/github-action-vue-demo" ];then
-              git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
-            else
-              echo "github-action-vue-demo文件夹已经存在"
-            fi
-
-            cd ~/workspace/github-action-vue-demo
-            git checkout dev
-            echo '------------------------------------------------------'
-            git pull origin dev
-            echo "======================================================"
+        # run: |
+        #   ssh weiyi@124.223.206.155 "
+        #     mkdir ~/workspace
             
-            # 启动docker 
-            docker-compose build vue-demo
-            docker-compose up -d
-          "
+        #     cd ~/workspace
+
+        #     git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
+
+        #     cd ~/workspace/github-action-vue-demo
+            
+        #     echo '------------------------------------------------------'
+        #     git pull origin dev
+        #     echo "======================================================"
+            
+        #     # 启动docker 
+        #     docker-compose build vue-demo
+        #     docker-compose up -d
+        #   "
+        run: |
+          ssh weiyi@124.223.206.155
+
+          mkdir ~/workspace
+
+          cd ~/workspace
+
+          git clone https://github.com/wangweiyi/github-action-vue-demo.git -b dev
+
+          cd ~/workspace/github-action-vue-demo
+          
+          git pull origin dev
+          
+          docker-compose build vue-demo
+          docker-compose up -d
+          
       
       - name: delete ssh key
         run: rm -rf ~/.ssh/id_rsa
