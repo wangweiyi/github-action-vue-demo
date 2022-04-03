@@ -44,8 +44,9 @@ jobs:
         #     docker-compose up -d
         #   "
       - name: connet to server 
-        run: ssh weiyi@124.223.206.155
+        run: ssh weiyi@124.223.206.155 && cd && pwd
 
+      - run: pwd
       - run: mkdir ~/workspace
       - run: cd ~/workspace
 
